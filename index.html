@@ -75,10 +75,18 @@ h1{font-size:clamp(2.5rem,7.2vw,5.1rem);line-height:1.02;letter-spacing:-.035em;
 
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
   border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:70px}
-.stat{background:var(--bg);padding:26px 22px}
-.stat b{display:block;font-family:var(--mono);font-size:clamp(1.5rem,3.4vw,2.15rem);font-weight:700;letter-spacing:-.03em}
-.stat span{font-size:.82rem;color:var(--dim)}
-@media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--bg);padding:30px 24px 26px;position:relative;transition:background .3s}
+.stat:hover{background:var(--panel)}
+.stat b{display:block;font-family:var(--mono);font-size:clamp(2rem,4.6vw,3.1rem);font-weight:700;
+  letter-spacing:-.04em;line-height:1;color:var(--ink)}
+.stat b i{font-style:normal;color:var(--accent);font-size:.62em;vertical-align:.18em;margin-left:1px}
+.stat .lab{display:block;margin-top:12px;font-size:.94rem;font-weight:650;color:var(--ink)}
+.stat .note{display:block;margin-top:5px;font-size:.79rem;color:var(--dim);line-height:1.45;min-height:2.3em}
+.stat .fill{display:block;height:3px;border-radius:2px;margin-top:16px;width:0;
+  background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 30%,transparent));
+  transition:width 1.1s cubic-bezier(.22,1,.36,1) .15s}
+.stat.in .fill{width:var(--w)}
+@media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.stat .note{min-height:0}}
 
 section{padding:100px 0;border-top:1px solid var(--line)}
 .head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:38px;flex-wrap:wrap}
@@ -138,6 +146,28 @@ h2{font-size:clamp(1.7rem,3.6vw,2.5rem);letter-spacing:-.03em;margin:10px 0 0;fo
 .step p{margin:0;font-size:.88rem;color:var(--dim)}
 .rule{height:1px;background:var(--line);margin:22px 0}
 
+.why{border:1px solid var(--line);border-radius:var(--r);padding:30px;background:var(--panel);
+  opacity:0;transform:translateY(26px);
+  transition:opacity .6s,transform .6s cubic-bezier(.22,1,.36,1),border-color .3s}
+.why.in{opacity:1;transform:none}
+.why:hover{border-color:var(--accent)}
+.why h3{margin:12px 0 8px;font-size:1.15rem;letter-spacing:-.02em}
+.why p{margin:0;color:var(--soft);font-size:.93rem;line-height:1.62}
+
+.faq details{border-top:1px solid var(--line);opacity:0;transform:translateY(18px);
+  transition:opacity .5s,transform .5s cubic-bezier(.22,1,.36,1)}
+.faq details.in{opacity:1;transform:none}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:22px 46px 22px 0;position:relative;
+  font-size:1.06rem;font-weight:650;letter-spacing:-.015em;transition:color .2s}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--accent)}
+.faq summary:after{content:"";position:absolute;right:8px;top:50%;width:11px;height:11px;
+  margin-top:-7px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);
+  transform:rotate(45deg);transition:transform .3s}
+.faq details[open] summary:after{transform:rotate(-135deg);margin-top:-3px}
+.faq p{margin:0 0 24px;color:var(--soft);font-size:.95rem;line-height:1.68;max-width:74ch}
+
 .contact{text-align:center;padding:110px 0}
 .contact h2{font-size:clamp(2rem,5.4vw,3.4rem)}
 .contact p{max-width:560px;margin:18px auto 0;color:var(--soft)}
@@ -162,7 +192,8 @@ footer{border-top:1px solid var(--line);padding:34px 0;color:var(--dim);font-siz
   color:#fff;border-radius:999px;width:42px;height:42px;font-size:1.1rem;cursor:pointer;line-height:1}
 @media (prefers-reduced-motion: reduce){
   *{animation:none!important;transition:none!important}
-  .card,.svc,.step,.lead,.cta,.w{opacity:1!important;transform:none!important}
+  .card,.svc,.step,.stat,.why,.faq details,.lead,.cta,.w{opacity:1!important;transform:none!important}
+  .stat .fill{width:var(--w)!important}
 }
 </style>
 </head>
@@ -174,7 +205,8 @@ footer{border-top:1px solid var(--line);padding:34px 0;color:var(--dim);font-siz
   <div class="navlinks">
     <a href="#work">Work</a>
     <a href="#services">Services</a>
-    <a href="#process">Process</a>
+    <a href="#why">Why</a>
+    <a href="#faq">FAQ</a>
     <a class="btn" href="mailto:stackstoryboard@gmail.com?subject=Project%20enquiry">Start a project</a>
   </div>
 </div></nav>
@@ -182,7 +214,7 @@ footer{border-top:1px solid var(--line);padding:34px 0;color:var(--dim);font-siz
 <header id="top">
   <div class="glow"></div>
   <div class="wrap">
-    <p class="eyebrow">Video studio &middot; Australia</p>
+    <p class="eyebrow">Video studio for technical products</p>
     <h1><span class="w">Ads</span> <span class="w">and</span> <span class="w">explainers</span> <span class="w">for</span> <span class="w">products</span> <span class="w">that</span> <span class="w">are</span> <span class="w hl">hard</span> <span class="w hl">to</span> <span class="w hl">explain.</span></h1>
     <p class="lead">Motion design built from the mechanism up &mdash; the screen demonstrates the thing, the words just label it. Ninety-nine videos shipped, 302,000 views, and a back catalogue that proves people watch to the end.</p>
     <div class="cta">
@@ -194,10 +226,30 @@ footer{border-top:1px solid var(--line);padding:34px 0;color:var(--dim);font-siz
   <div class="marq"><div class="track" id="track"></div></div>
 
   <div class="wrap"><div class="stats">
-    <div class="stat"><b data-count="302">0</b><span>thousand views</span></div>
-    <div class="stat"><b data-count="98">0</b><span>views per follower</span></div>
-    <div class="stat"><b data-count="135">0</b><span>thousand, best video</span></div>
-    <div class="stat"><b data-count="99">0</b><span>videos shipped</span></div>
+    <div class="stat">
+      <b><span data-count="302">0</span>K<i>+</i></b>
+      <span class="lab">Total views</span>
+      <span class="note">Entirely organic. No paid promotion, ever.</span>
+      <em class="fill" style="--w:100%"></em>
+    </div>
+    <div class="stat">
+      <b><span data-count="99">0</span><i>+</i></b>
+      <span class="lab">Videos shipped</span>
+      <span class="note">Written, animated and rendered end to end.</span>
+      <em class="fill" style="--w:78%"></em>
+    </div>
+    <div class="stat">
+      <b><span data-count="135">0</span>K<i>+</i></b>
+      <span class="lab">On one video</span>
+      <span class="note">A single 57-second short about device tracking.</span>
+      <em class="fill" style="--w:62%"></em>
+    </div>
+    <div class="stat">
+      <b><span data-count="98">0</span><i>&times;</i></b>
+      <span class="lab">Views per follower</span>
+      <span class="note">A typical account returns one to five.</span>
+      <em class="fill" style="--w:92%"></em>
+    </div>
   </div></div>
 </header>
 
@@ -260,7 +312,73 @@ footer{border-top:1px solid var(--line);padding:34px 0;color:var(--dim);font-siz
       <div class="step"><b>STEP 01</b><h3>Brief</h3><p>What the product does, who it is for, and the one idea the video has to land.</p></div>
       <div class="step"><b>STEP 02</b><h3>Script &amp; board</h3><p>Written and approved before anything is animated, so nothing expensive gets rebuilt.</p></div>
       <div class="step"><b>STEP 03</b><h3>Build</h3><p>Designed and rendered in code, which is why turnaround is days rather than weeks.</p></div>
-      <div class="step"><b>STEP 04</b><h3>Deliver</h3><p>One revision round included, then final files in every aspect ratio you need.</p></div>
+      <div class="step"><b>STEP 04</b><h3>Deliver</h3><p>Finished MP4s in the ratios you need, plus a subtitle file and poster frame. One revision round included.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <p class="eyebrow">Why this works</p>
+    <h2>Four things most video shops can&rsquo;t offer.</h2>
+    <div class="cols" style="margin-top:38px">
+      <div class="why">
+        <span class="num">01</span>
+        <h3>It&rsquo;s built in code, not on a timeline</h3>
+        <p>Every frame is a program. Changing a colour, a number, a language or an aspect ratio is an edit and a re-render, not a rebuild &mdash; which is why revisions come back the same day and variants cost almost nothing.</p>
+      </div>
+      <div class="why">
+        <span class="num">02</span>
+        <h3>Correct by default</h3>
+        <p>The explainers are made by someone who reads the docs. Nothing gets hand-waved into a pretty animation that&rsquo;s quietly wrong, which matters when your audience is engineers who will notice.</p>
+      </div>
+      <div class="why">
+        <span class="num">03</span>
+        <h3>Nothing is a template</h3>
+        <p>Every piece gets its own palette, layout, motion language and hero object, designed from your concept. No house style dropped over your logo, because recycled work is obvious to exactly the people you want to impress.</p>
+      </div>
+      <div class="why">
+        <span class="num">04</span>
+        <h3>You see it before you commit</h3>
+        <p>If the brief is specific, you get ten to fifteen seconds of your actual concept, built and sent for free. Judge the work, not the pitch.</p>
+      </div>
+    </div>
+    <div style="margin-top:44px;display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn" href="mailto:stackstoryboard@gmail.com?subject=Project%20enquiry">Start a project</a>
+      <a class="btn ghost" href="#work">See the work again</a>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="eyebrow">Questions</p>
+    <h2>The things people ask first.</h2>
+    <div class="faq" style="margin-top:34px">
+      <details>
+        <summary>What do I actually receive?</summary>
+        <p>Finished video files &mdash; MP4, H.264, in whatever aspect ratios you need (9:16, 1:1, 16:9), plus an SRT subtitle file and a poster frame for thumbnails. Editable project files aren&rsquo;t included: the animation is built in a custom code pipeline rather than After Effects, so there&rsquo;s no timeline to hand over. If you need something changed later, send it back &mdash; that&rsquo;s usually faster than editing it yourself would be.</p>
+      </details>
+      <details>
+        <summary>How long does it take?</summary>
+        <p>A first short is about a week, because that&rsquo;s where the visual identity gets built. After that, two to three days each. Long-form runs two to three weeks depending on length and how much research it needs.</p>
+      </details>
+      <details>
+        <summary>Who writes the script?</summary>
+        <p>I do, unless you&rsquo;d rather. Most clients send a rough brief or a doc and get a script back for approval before anything is animated. If you already have a script and voiceover, that works too and it&rsquo;s faster.</p>
+      </details>
+      <details>
+        <summary>What if I don&rsquo;t like it?</summary>
+        <p>One revision round is included on every project, and script approval happens before any animation starts, so surprises are rare by design. For a first project the spec sample means you&rsquo;ve already seen the treatment applied to your own concept before committing.</p>
+      </details>
+      <details>
+        <summary>Can you match our brand?</summary>
+        <p>Yes &mdash; send your palette, type and any guidelines and the piece is designed inside them. What doesn&rsquo;t get reused is the layout and motion language; those are built fresh for each concept.</p>
+      </details>
+      <details>
+        <summary>How does pricing work?</summary>
+        <p>Per project, quoted on scope. Length, research depth, number of variants and turnaround all move it, so a rate card would be misleading. Tell me what you need and you&rsquo;ll get a number, not a package.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -338,7 +456,7 @@ function observe(){
       } else if(v){ v.pause(); }
     });
   },{threshold:.25});
-  document.querySelectorAll(".card,.svc,.step").forEach(function(el){ io.observe(el); });
+  document.querySelectorAll(".card,.svc,.step,.stat,.why,.faq details").forEach(function(el){ io.observe(el); });
 }
 
 function render(filter){
